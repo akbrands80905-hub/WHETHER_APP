@@ -1,30 +1,30 @@
 import { useState } from "react";
 
-function SearchBar({ onSearch }) {
+function SearchBar({ onSearch, loading = false }) {
   const [city, setCity] = useState("");
 
-  function handleSearch() {
-    if (city.trim() === "") {
-      alert("Please enter a city name");
-      return;
-    }
-
-    onSearch(city);
+  function handleSearch(event) {
+    event.preventDefault();
+    if (!city.trim() || loading) return;
+    onSearch(city.trim());
   }
 
   return (
-    <div className="search-box">
+    <form className="search-box" onSubmit={handleSearch} role="search">
+      <span className="search-icon" aria-hidden="true">⌕</span>
       <input
         type="text"
-        placeholder="Enter city name"
+        aria-label="Search for a city"
+        placeholder="Search a city..."
         value={city}
         onChange={(e) => setCity(e.target.value)}
+        autoComplete="off"
+        maxLength={80}
       />
-
-      <button onClick={handleSearch}>
-        Search
+      <button type="submit" disabled={loading || !city.trim()}>
+        {loading ? "Loading…" : "Search"}
       </button>
-    </div>
+    </form>
   );
 }
 

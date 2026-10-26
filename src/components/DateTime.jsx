@@ -49,7 +49,7 @@ function DateTime(){
 
 
       <h2>
-        🕒 {currentTime}
+        Your local time {currentTime}
       </h2>
 
 
